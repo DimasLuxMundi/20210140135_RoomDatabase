@@ -37,6 +37,7 @@ import com.example.meet10pam.data.Siswa
 import com.example.meet10pam.model.HomeViewModel
 import com.example.meet10pam.model.PenyediaViewModel
 import com.example.meet10pam.navigasi.DestinasiNavigasi
+import com.example.meet10pam.navigasi.SiswaToAppBar
 
 object DestinasiHome : DestinasiNavigasi {
     override val route = "home"
@@ -54,7 +55,13 @@ fun HomeScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {},
+        topBar = {
+            SiswaToAppBar(
+                title = stringResource(DestinasiHome.titleRes),
+                canNavigasiBack = false,
+                scrollBehavior = scrollBehavior
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = navigateToitemEntry,
@@ -100,7 +107,8 @@ fun BodyHome(
         } else {
             ListSiswa(
                 itemSiswa = itemSiswa,
-                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small)))
+                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
+            )
         }
 
     }
@@ -110,15 +118,14 @@ fun BodyHome(
 @Composable
 fun ListSiswa(
     itemSiswa: List<Siswa>,
-    modifier: Modifier=Modifier
-    ){
-    LazyColumn(modifier = Modifier){
-        items(items = itemSiswa, key = {it.id}){
-            person ->
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = Modifier) {
+        items(items = itemSiswa, key = { it.id }) { person ->
             DataSiswa(
                 siswa = person,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
-                )
+            )
 
         }
 
@@ -130,19 +137,24 @@ fun ListSiswa(
 @Composable
 fun DataSiswa(
     siswa: Siswa,
-    modifier: Modifier=Modifier
-){
-    Card(modifier = modifier,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+        Column(
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
 
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
             ) {
-            Row(modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = siswa.nama,
-                    style = MaterialTheme.typography.titleLarge)
+                Text(
+                    text = siswa.nama,
+                    style = MaterialTheme.typography.titleLarge
+                )
 
                 Spacer(Modifier.weight(1f))
 
@@ -160,7 +172,7 @@ fun DataSiswa(
                 text = siswa.alamat,
                 style = MaterialTheme.typography.titleMedium
             )
-            
+
         }
 
     }
