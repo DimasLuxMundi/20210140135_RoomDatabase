@@ -1,6 +1,7 @@
 package com.example.meet10pam.model
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -13,6 +14,15 @@ object PenyediaViewModel {
         }
         initializer {
             EntryViewModel(AplikasiSiswa().container.repositoriSiswa)
+        }
+        initializer {
+            DetailsViewModel(
+                createSavedStateHandle(),
+                AplikasiSiswa().container.repositoriSiswa,
+            )
+        }
+        initializer {
+            EditViewModel(createSavedStateHandle(), AplikasiSiswa().container.repositoriSiswa)
         }
     }
 }
